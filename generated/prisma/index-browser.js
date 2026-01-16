@@ -161,6 +161,18 @@ exports.Prisma.BookingScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.BusinessSubscriptionScalarFieldEnum = {
+  id: 'id',
+  serviceLimit: 'serviceLimit',
+  status: 'status',
+  providerId: 'providerId',
+  paymentSentAt: 'paymentSentAt',
+  activatedAt: 'activatedAt',
+  activatedBy: 'activatedBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.AccountScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -230,10 +242,17 @@ exports.PaymentStatus = exports.$Enums.PaymentStatus = {
   PROVIDER_CONFIRMED: 'PROVIDER_CONFIRMED'
 };
 
+exports.SubscriptionStatus = exports.$Enums.SubscriptionStatus = {
+  PENDING: 'PENDING',
+  PAYMENT_SENT: 'PAYMENT_SENT',
+  ACTIVE: 'ACTIVE'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Service: 'Service',
   Booking: 'Booking',
+  BusinessSubscription: 'BusinessSubscription',
   Account: 'Account',
   Session: 'Session',
   VerificationToken: 'VerificationToken'

@@ -307,6 +307,31 @@ export default function ProviderDashboard() {
               <p className="text-sm text-gray-500">Update payment QR code</p>
             </div>
           </Link>
+
+          <Link
+            href="/dashboard/provider/subscription"
+            className="flex items-center gap-4 rounded-xl border border-orange-200 bg-orange-50 p-6 transition-shadow hover:shadow-md"
+          >
+            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-orange-100">
+              <svg
+                className="h-6 w-6 text-orange-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+                />
+              </svg>
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-900">Business Subscription</h3>
+              <p className="text-sm text-gray-500">Upgrade to add more services</p>
+            </div>
+          </Link>
         </div>
 
         {/* My Services */}

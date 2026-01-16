@@ -14,34 +14,43 @@ export const ourFileRouter = {
     },
   })
     .middleware(async () => {
-      const session = await auth();
+      try {
+        const session = await auth();
 
-      if (!session?.user) {
-        // eslint-disable-next-line @typescript-eslint/only-throw-error
-        throw new UploadThingError("Unauthorized");
+        if (!session?.user) {
+          console.error("[Uploadthing] No session found");
+          // eslint-disable-next-line @typescript-eslint/only-throw-error
+          throw new UploadThingError("Unauthorized");
+        }
+
+        // Check if user is provider or admin
+        const user = await db.user.findUnique({
+          where: { id: session.user.id },
+          select: { role: true },
+        });
+
+        if (user?.role !== "PROVIDER" && user?.role !== "ADMIN") {
+          console.error("[Uploadthing] User role not authorized:", user?.role);
+          // eslint-disable-next-line @typescript-eslint/only-throw-error
+          throw new UploadThingError("Only providers can upload payment QR codes");
+        }
+
+        return { userId: session.user.id };
+      } catch (error) {
+        console.error("[Uploadthing] Middleware error:", error);
+        throw error;
       }
-
-      // Check if user is provider or admin
-      const user = await db.user.findUnique({
-        where: { id: session.user.id },
-        select: { role: true },
-      });
-
-      if (user?.role !== "PROVIDER" && user?.role !== "ADMIN") {
-        // eslint-disable-next-line @typescript-eslint/only-throw-error
-        throw new UploadThingError("Only providers can upload payment QR codes");
-      }
-
-      return { userId: session.user.id };
     })
     .onUploadComplete(async ({ metadata, file }) => {
       // Update user's paymentQrCode field
+      // Use ufsUrl for UFS storage or url for regular storage
+      const fileUrl = file.ufsUrl ?? file.url;
       await db.user.update({
         where: { id: metadata.userId },
-        data: { paymentQrCode: file.ufsUrl },
+        data: { paymentQrCode: fileUrl },
       });
 
-      return { uploadedBy: metadata.userId, url: file.ufsUrl };
+      return { uploadedBy: metadata.userId, url: fileUrl };
     }),
 } satisfies FileRouter;
 

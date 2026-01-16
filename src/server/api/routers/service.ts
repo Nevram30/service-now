@@ -79,12 +79,35 @@ export const serviceRouter = createTRPCRouter({
       // Verify user is a provider
       const user = await ctx.db.user.findUnique({
         where: { id: ctx.session.user.id },
+        include: {
+          businessSubscription: true,
+          providedServices: true,
+        },
       });
 
       if (user?.role !== "PROVIDER") {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Only providers can create services",
+        });
+      }
+
+      // Check service limit
+      const currentServiceCount = user.providedServices.length;
+      const subscription = user.businessSubscription;
+
+      // Determine the limit based on subscription status
+      let serviceLimit = 1; // Default free tier limit
+      if (subscription?.status === "ACTIVE") {
+        serviceLimit = subscription.serviceLimit;
+      }
+
+      if (currentServiceCount >= serviceLimit) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: subscription?.status === "ACTIVE"
+            ? "You have reached your service limit. Please contact admin to increase your limit."
+            : "Free tier allows only 1 service. Please subscribe to add more services.",
         });
       }
 
