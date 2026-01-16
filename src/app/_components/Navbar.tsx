@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 interface CachedUser {
   name?: string | null;
@@ -79,19 +80,12 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600">
-            <svg
-              className="h-5 w-5 text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 10V3L4 14h7v7l9-11h-7z"
-              />
-            </svg>
+            <Image
+              src="/image/logo/logo.png"
+              alt="ServiceNow Logo"
+              width={36}
+              height={36}
+            />
           </div>
           <span className="text-xl font-bold text-gray-900">ServiceNow</span>
         </Link>
@@ -139,7 +133,7 @@ export function Navbar() {
         <div className="flex items-center gap-4">
           {isInitialLoading ? (
             <div className="h-8 w-8 animate-pulse rounded-full bg-gray-200" />
-          ) : isAuthenticated  ? (
+          ) : isAuthenticated ? (
             <div className="flex items-center gap-3">
               <div className="hidden sm:block">
                 <p className="text-sm font-medium text-gray-900">
@@ -160,7 +154,7 @@ export function Navbar() {
                   {displayUser?.name?.charAt(0) ?? "U"}
                 </div>
               )}
-              
+
               <Link
                 href="/api/auth/signout"
                 className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
