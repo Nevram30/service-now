@@ -37,6 +37,7 @@ export const authConfig = {
     GoogleProvider({
       clientId: process.env.AUTH_GOOGLE_ID!,
       clientSecret: process.env.AUTH_GOOGLE_SECRET!,
+      allowDangerousEmailAccountLinking: true,
     }),
     CredentialsProvider({
       name: "credentials",
@@ -87,7 +88,16 @@ export const authConfig = {
     jwt: async ({ token, user, trigger }) => {
       if (user) {
         token.id = user.id;
-        token.role = user.role;
+        // For OAuth users, role might not be in the user object, fetch from DB
+        if (user.role) {
+          token.role = user.role;
+        } else {
+          const dbUser = await db.user.findUnique({
+            where: { id: user.id },
+            select: { role: true },
+          });
+          token.role = dbUser?.role ?? "CUSTOMER";
+        }
       }
       // Refresh role from database on session update
       if (trigger === "update" && token.id) {
