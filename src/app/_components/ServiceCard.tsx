@@ -28,7 +28,7 @@ const categoryConfig: Record<
   },
   AIRCON_REPAIR: {
     label: "Aircon Repair",
-    color: "bg-blue-100 text-blue-700",
+    color: "bg-teal-100 text-teal-700",
     icon: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
   },
   CLEANING: {
@@ -68,7 +68,7 @@ export function ServiceCard({
 
   return (
     <Link href={servicePath}>
-      <div className="group h-full overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:border-blue-200 hover:shadow-md">
+      <div className="group h-full overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:border-teal-200 hover:shadow-md">
         {/* Category Banner */}
         <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-4 py-3">
           <span
@@ -93,7 +93,7 @@ export function ServiceCard({
 
         {/* Content */}
         <div className="p-4">
-          <h3 className="mb-2 text-lg font-semibold text-gray-900 group-hover:text-blue-600">
+          <h3 className="mb-2 text-lg font-semibold text-gray-900 group-hover:text-teal-600">
             {title}
           </h3>
           <p className="mb-4 line-clamp-2 text-sm text-gray-600">
@@ -126,7 +126,7 @@ export function ServiceCard({
               </p>
               <p className="text-xs text-gray-500">{durationMinutes} min</p>
             </div>
-            <button className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors group-hover:bg-blue-700">
+            <button className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white transition-colors group-hover:bg-teal-700">
               Book Now
             </button>
           </div>
